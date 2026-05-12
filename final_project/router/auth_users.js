@@ -19,7 +19,7 @@ regd_users.post("/login", (req, res) => {
   if (authenticatedUser(username, password)) {
     let accessToken = jwt.sign({ username }, "access", { expiresIn: "1h" });
     req.session.authorization = { accessToken };
-    return res.status(200).json({ message: "User successfully logged in", accessToken });
+    return res.status(200).json({ message: "Login successful!", accessToken });
   } else {
     return res.status(401).json({ message: "Invalid credentials" });
   }
@@ -40,7 +40,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   if (!books[isbn]) return res.status(404).json({ message: "Book not found" });
   if (books[isbn].reviews[username]) {
     delete books[isbn].reviews[username];
-    return res.status(200).json({ message: "Review deleted" });
+    return res.status(200).json({ message: "Review for ISBN " + isbn + " by user " + username + " deleted successfully" });
   } else {
     return res.status(404).json({ message: "Review not found" });
   }
